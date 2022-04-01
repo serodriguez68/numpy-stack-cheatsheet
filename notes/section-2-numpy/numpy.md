@@ -12,7 +12,7 @@ In numpy most of the time vectors will be 1D (i.e Nx0)
 ### Dot product
 ![dot product](dot-product.png)
 
-Element-wise multiplication and then summation. 
+Element-wise multiplication and then summation of all elements in two vectors **OF THE SAME SIZE**.
 
 ### Matrix Multiplication
 ![matrix multiplication](mat-mul.png)
