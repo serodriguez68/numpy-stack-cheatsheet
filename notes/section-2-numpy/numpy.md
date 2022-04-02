@@ -247,6 +247,18 @@ np.array_equal(shouldBeIdentity, np.identity(2)) # False
 np.allclose(shouldBeIdentity, np.identity(2)) # True
 ```
 
+### Solving linear systems
+![a simple linear system of equations](a-simple-linear-system-of-equations.png)
+
+```python
+import numpy as np
+
+A = np.array([[1, 1], [1.5, 4]])
+b = np.array([2200, 5050])
+# You can solve a linear system analytically with the inverse. HOWEVER, THIS IS VERY INEFFICIENT COMPUTATIONALLY
+x = np.linalg.inv(A) @ b # INEFFICIENT, DON'T USE IT
+x2 = np.linalg.solve(A, b) # More efficient
+```
 
 
 ## Common operations used in ML
