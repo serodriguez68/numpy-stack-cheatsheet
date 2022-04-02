@@ -44,3 +44,4 @@ this TOC points to the sections that I have finalized.
   + [Sum, mean, standard deviation, max, argmax, and others](./2-numpy.md#sum-mean-standard-deviation-max-argmax-and-others)
   + [Concatenate](./2-numpy.md#concatenate)
   + [Choosing a random number](./2-numpy.md#choosing-a-random-number)
+* [Sorting](./2-numpy.md#sorting)

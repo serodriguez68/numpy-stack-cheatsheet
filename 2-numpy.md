@@ -53,7 +53,7 @@ row.shape # (2,) NOTE THAT THIS RETURNS 1D VECTORS, as opposed to a (2,1) 2d mat
 column = array2d[:, 1] #  array([2, 4]
 column.shape # (2,) NOTE THAT THIS RETURNS 1D VECTORS, as opposed to a (2,1) 2d matrix
 
-# Accessing portions of an NP array
+# Accessing continuous portions of an NP array
 bigArray2d = np.array([[1,2,3], [4,5,6], [7, 8, 9]])
 # array([[1, 2, 3],
 #        [4, 5, 6],
@@ -61,6 +61,16 @@ bigArray2d = np.array([[1,2,3], [4,5,6], [7, 8, 9]])
 bigArray2d[1:, 0:2] # `1:` means from row one till the end, `0:2` means from column 0 (inclusive) till column 2 (exclusive)
 # array([[4, 5],
 #        [7, 8]])
+
+# Cherry-picking specific rows or columns
+# Note that the returned rows / columns are in the order I specify. This is a key concept for sorting (more below)
+bigArray2d[[2,0]]
+# array([[7, 8, 9],  
+#        [1, 2, 3]])
+bigArray2d[:,[1,0]]
+# array([[2, 1],
+#        [5, 4],
+#        [8, 7]])
 ```
 
 ## Scalar operations
@@ -409,20 +419,18 @@ import numpy as np
 arr = np.array([[0,1,2], [3,4,5]])
 # array([[0, 1, 2],
 #        [3, 4, 5]])
-arr.sum(axis=0)
-# array([3, 5, 7])
-arr.mean(axis=0)
-# array([1.5, 2.5, 3.5]
+arr.sum(axis=0) # array([3, 5, 7])
+arr.mean(axis=0) # array([1.5, 2.5, 3.5]
+arr.max(axis=0) # array([3, 4, 5])
 
-arr.sum(axis=1)
-# array([ 3, 12])
-arr.mean(axis=1)
-# array([1., 4.])
+arr.sum(axis=1) # array([ 3, 12])
+arr.mean(axis=1) # array([1., 4.])
+arr.max(axis=1) # array([2, 5])
 
 arr2=np.array([[0,10,5],[500,3,2]])
 # array([[  0,  10,   5],
 #        [500,   3,   2]])
-arr2.argmax(axis=0)
+arr2.argmax(axis=0) 
 # array([1, 0, 0]) => The position in the 2 rows being collapsed of the maximum number per column (500, 10 and 5)
 arr2.argmax(axis=1)
 # array([1, 0]) => The position in the 3 columns being collapsed of the maximum number per row (10 and 500)
@@ -517,4 +525,41 @@ bottom3.shape # (1,4) Notice that it does not convert it into a 1D array
 left3, mid3, right3 = np.split(arr_to_split, [2,3], axis=1)
 ```
 
-## Sorting by columns
+## Sorting
+In ML sorting a matrix by the numerical value of a column is very common.
+
+```python
+import numpy as np
+
+# SORTING BY COLUMNS
+arrToSort = np.array([[11, 12, 13, 22], [21, 7, 23, 14], [31, 10, 33, 7]])
+# array([[11, 12, 13, 22],
+#        [21,  7, 23, 14],
+#        [31, 10, 33,  7]])
+columnToSortBy = 1 # We want to sort by the second column
+
+
+# This is tricky to understand, so we will spell it out first
+valsInColumnToSort = arrToSort[:,columnToSortBy] # array([12,  7, 10])
+sortingIndexes = valsInColumnToSort.argsort() # array([1, 2, 0])
+sortedArr = arrToSort[sortingIndexes]  # this is cherry-picking certain rows by doing arrToSort[[1,2,0]] (see accessing arrays section above)
+# valsInColumnToSort:    sortingIndexes:    sortedVector:                                                                
+# 12,         ┌───────── 1,◀─────────────── 7,                   
+#             │                                                  
+# 7, ◀────────┘   ┌───── 2,◀─────────────── 10,                  
+#                 │                                              
+# 10 ◀────────────┘  ... 0 ◀─────────────── 12                   
+#                                                                
+#                                                                
+# arrToSort:              sortingIndexes:    sortedArr:                                                                        
+# [[11 12 13 22]    ┌──── 1, ◀───────────────[[21  7 23 14]      
+#                   │                                            
+#  [21  7 23 14] ◀──┘┌─── 2, ◀─────────────── [31 10 33  7]      
+#                    │                                           
+#  [31 10 33  7]]◀───┘    0  ◀─────────────── [11 12 13 22]]     
+                                                               
+# Now the evil-looking one-liner
+sortedArr2 = arrToSort[arrToSort[:,columnToSortBy].argsort()]
+```
+
+Sorting by rows can be achieved in a similar way.
