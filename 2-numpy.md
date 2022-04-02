@@ -141,9 +141,12 @@ vector1 * vector2 # array([ 4, 10, 18])
 vector1 / vector2 # array([0.25, 0.4 , 0.5 ])
 ```
 
-## Dot Product of Vectors 
+## Vector Operations
+### Dot Product of Vectors 
 Element-wise multiplication and then summation of all elements in two vectors **OF THE SAME SIZE**.
-![dot product](dot-product.png)
+
+<img alt="dot product" src="img/section-2-numpy/dot-product.png" width="300"/>
+
 ```python
 import numpy as np
 
@@ -156,7 +159,7 @@ a @ b # 11 @ is available in the newer versions of numpy
 
 ```
 
-## Magnitude (aka norm) and cosine similarity of vectors
+### Magnitude (aka norm) and cosine similarity of vectors
 The linear algebra functionality in numpy is located within the `np.linalg` module
 The cosine similarity is derived from the geometric definition of the dot product:
 
@@ -248,7 +251,7 @@ np.allclose(shouldBeIdentity, np.identity(2)) # True
 ```
 
 ### Solving linear systems
-![a simple linear system of equations](a-simple-linear-system-of-equations.png)
+![a simple linear system of equations](img/section-2-numpy/a-simple-linear-system-of-equations.png)
 
 ```python
 import numpy as np
@@ -389,16 +392,16 @@ The convention for axes indexing is shown below. Notice that 1D arrays **only ha
 pitfall for people to confuse `axis=0` in a 2d array (i.e rows) with `axis=0` in a 1D array 
 (no such thing as rows or colums in a 1D array).
 
-![2d array axes convention](2d-array-axes-convention.png)
-![1d array axes convention](1d-array-axes-convention.png)
+![2d array axes convention](img/section-2-numpy/2d-array-axes-convention.png)
+![1d array axes convention](img/section-2-numpy/1d-array-axes-convention.png)
 
 ### Operations along axes
 **Each operation has a different behaviour when you specify which axis to apply it over**. This is also a common pitfall.
 
-### Sum, mean, standard deviation, max, argmax, and others
+#### Sum, mean, standard deviation, max, argmax, and others
 In these operations the axis argument refers to the axis that is going to be **COLLAPSED**. This is somewhat counter-intuitive.
 
-![sum operation along an axis](sum-operation-along-an-axis.png)
+![sum operation along an axis](img/section-2-numpy/sum-operation-along-an-axis.png)
 
 ```python
 import numpy as np
@@ -425,13 +428,7 @@ arr2.argmax(axis=1)
 # array([1, 0]) => The position in the 3 columns being collapsed of the maximum number per row (10 and 500)
 ```
 
-### Concatenate
+#### Concatenate
 
-![concatenation operation along axis](concatenation-operation-along-axis.png)
+![concatenation operation along axis](img/section-2-numpy/concatenation-operation-along-axis.png)
 
-
-
-
-
-### Choosing a random number
-Choosing at random from a distribution (e.g. Uniform, Gaussian)
