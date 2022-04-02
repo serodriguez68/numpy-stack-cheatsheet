@@ -260,10 +260,175 @@ x = np.linalg.inv(A) @ b # INEFFICIENT, DON'T USE IT
 x2 = np.linalg.solve(A, b) # More efficient
 ```
 
+## Generating Data
+Why we need this?
+- Initializing ML parameters to some value to start the training process
+- Generate synthetic data to test an algorithm
+- Generate random numbers from a distribution
+```python
+import numpy as np
 
-## Common operations used in ML
+# ARRAYS OF THE SAME NUMBER 
+np.zeros((2,3))
+# array([[0., 0., 0.],
+#        [0., 0., 0.]])
+np.ones((2,3))
+# array([[1., 1., 1.],
+#        [1., 1., 1.]])
+# Array of any arbitrary number
+np.ones((2,3)) * 13 
+# array([[13., 13., 13.],
+#        [13., 13., 13.]])
 
-### Solve Linear Systems
+# IDENTITY AND DIAGONALS
+np.eye(3)
+np.identity(3) # equivalent
+# array([[1., 0., 0.],
+#        [0., 1., 0.],
+#        [0., 0., 1.]])
+
+np.diag([1,2])
+# array([[1, 0],
+#        [0, 2]])
+
+# Sequences and Linear intervals
+np.arange(2, 10, 2) # start, stop, step . Numbers are generated in the range [start, stop)
+# array([2, 4, 6, 8])
+
+np.linspace(20, 30, num = 5) # 5 linearly spaced numbers between 20 and 30 inclusive on both sides
+#  array([20. , 22.5, 25. , 27.5, 30. ])
+starts = np.array([20,50])
+ends = np.array([30,60])
+np.linspace(starts, ends, num = 5) # Runs 2 independent linspace sequences returning each sequence as a column in an array
+# array([[20. , 50. ],
+#        [22.5, 52.5],
+#        [25. , 55. ],
+#        [27.5, 57.5],
+#        [30. , 60. ]])
+
+np.logspace(10, 30, num=5, base=10) # Logarithmic spacing between base**start and base**stop 
+# array([1.e+10, 1.e+15, 1.e+20, 1.e+25, 1.e+30])
+```
+
+### Generating Random Numbers with the `np.random` module
+
+```python
+import numpy as np
+
+# UNIFORM DISTRIBUTION RANDOM NUMBERS np.random.random()
+# By default uses a uniform distribution between 0 and 1
+np.random.random() # 0.9071094230239403
+np.random.random((2, 3)) # Tuple of desired shape
+# array([[0.05531528, 0.57214743, 0.14378213],
+#        [0.02893566, 0.2315892 , 0.47474896]])
+
+# == Gaussian / Normal distribution random numbers = np.random.normal(mean=0.0, variance=1.0, size=<None/int/tuple>)
+np.random.normal() #-0.21947009128664352 By default it uses a mean=0 and var=1 normal distribution
+np.random.normal(10, 2)  # 7.3672666330117735
+np.random.normal(10, 2, size=3) # array([ 6.65422927, 11.83325161, 10.64707005])
+np.random.normal(10, 2, size=(2,3))
+# array([[13.81648762,  7.24662232,  8.26770387],
+#        [ 8.60060987,  8.9609857 ,  9.64768672]])
+
+# RANDOM INTEGERS = np.random.randint(low, high<exclusive>, size)
+np.random.randint(0,10) # 6 => random integer between [0, 10) 
+np.random.randint(0,10, size=5) #  array([5, 4, 5, 4, 8])
+np.random.randint(0,10, size=(2,3)) # 2d array of random integers between [0, 10)
+# array([[9, 1, 0],
+#        [3, 7, 5]])
+
+#  SAMPLING A RANDOM NUMBER FROM A 1D ARRAY = np.random.choice(a, size=None, replace=True, p=None)
+# a: 1D array to sample from. Can also take a list
+# size: number of elements to sample from `a`. If given a tuple, the shape sampled output is put into an array of such
+#       shape.
+# replace: sample with or without repeating already sampled observations. Good setting for when oversampling data. De
+# p: the probabilities associated with each element in `a`. If not give, assumes uniform.
+sample_from = np.random.randint(0,10, size=5)
+weights = np.random.random(5)
+probabilites = weights / weights.sum() # normalising so that they sum up to 1
+np.random.choice(sample_from, p=probabilites) # 7
+np.random.choice(sample_from, 2, p=probabilites) # array([1, 7])
+np.random.choice(sample_from, (3,2), p=probabilites)
+# array([[2, 7],
+#        [2, 1],
+#        [7, 1]])
+```
+
+
+## Descriptive statistics of arrays
+
+```python
+import numpy as np
+
+arr = np.random.normal(10, 2, size=(20, 4))
+
+# Descriptive statistics of the whole matrix
+arr.mean()  # ~ 10
+arr.max()  # 14.55 
+# Others: arr.min() arr.sum() variance: arr.var(), standard deviation: arr.std()
+# Also available as a top-level method
+np.mean(arr)  # ~10
+
+# argmax returns the index of the largest element in the array assuming a flattened 1D array.
+# In some cases you may want to find the multidimensional index of the max. You can use unravel_index() for that.
+# This function is much more interesting when applied over an axis (see below). 
+# argmin also exists
+arr2 = np.array([[0, 10, 5], [500, 3, 2]])
+arr2.argmax()  # 3
+np.unravel_index(arr2.argmax(), arr.shape) # (1, 0)
+```
+
+## Numpy array axes and operations along axes 
+Imagine you have a 2D array that represents a table of data with observations as rows and features as columns.
+Often we want to apply operations either along the rows or along the columns of the array. In numpy this can be
+controlled by specifying the `axis` parameter on the function you are calling. 
+
+This idea of axes as rows and columns can also be extended to higher dimensional data, but we will keep it easy for now.
+
+The convention for axes indexing is shown below. Notice that 1D arrays **only have one axis (axis=0)**. It is common
+pitfall for people to confuse `axis=0` in a 2d array (i.e rows) with `axis=0` in a 1D array 
+(no such thing as rows or colums in a 1D array).
+
+![2d array axes convention](2d-array-axes-convention.png)
+![1d array axes convention](1d-array-axes-convention.png)
+
+### Operations along axes
+**Each operation has a different behaviour when you specify which axis to apply it over**. This is also a common pitfall.
+
+### Sum, mean, standard deviation, max, argmax, and others
+In these operations the axis argument refers to the axis that is going to be **COLLAPSED**. This is somewhat counter-intuitive.
+
+![sum operation along an axis](sum-operation-along-an-axis.png)
+
+```python
+import numpy as np
+
+arr = np.array([[0,1,2], [3,4,5]])
+# array([[0, 1, 2],
+#        [3, 4, 5]])
+arr.sum(axis=0)
+# array([3, 5, 7])
+arr.mean(axis=0)
+# array([1.5, 2.5, 3.5]
+
+arr.sum(axis=1)
+# array([ 3, 12])
+arr.mean(axis=1)
+# array([1., 4.])
+
+arr2=np.array([[0,10,5],[500,3,2]])
+# array([[  0,  10,   5],
+#        [500,   3,   2]])
+arr2.argmax(axis=0)
+# array([1, 0, 0]) => The position in the 2 rows being collapsed of the maximum number per column (500, 10 and 5)
+arr2.argmax(axis=1)
+# array([1, 0]) => The position in the 3 columns being collapsed of the maximum number per row (10 and 500)
+```
+
+### Concatenate
+
+![concatenation operation along axis](concatenation-operation-along-axis.png)
+
 
 
 
