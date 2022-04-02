@@ -13,7 +13,7 @@ structure whereas a NP array is a structure specifically to do Math operations.
 ```python
 import numpy as np
 
-# We well be using a list as comparison
+# We will be using a list as comparison
 list = [1, 2, 3]
 
 array1d = np.array([1, 2, 3]) # from a list creates a 1D vector
@@ -428,7 +428,93 @@ arr2.argmax(axis=1)
 # array([1, 0]) => The position in the 3 columns being collapsed of the maximum number per row (10 and 500)
 ```
 
-#### Concatenate
+#### Concatenating and Splitting Arrays
 
 ![concatenation operation along axis](img/section-2-numpy/concatenation-operation-along-axis.png)
 
+```python
+import numpy as np
+
+# CONCATENATION
+# Concatenation of 1D to 1D arrays
+a1d = np.array([1,2])
+b1d = np.array([3,4])
+np.concatenate((a1d,b1d)) #  array([1, 2, 3, 4]) Note that the vectors to concatenate are passed in as a tuple
+
+# Concatenate 2D to 2D arrays
+# The concatenation axis becomes important. Numpy checks that the dimensions make sense
+a2x3 = np.array([[0,10,5],[500,3,2]])
+b2x3 = np.ones((2,3))
+c3x3 = np.array([[1,2,3],[4,5,6],[7,8,9]])
+np.concatenate((a2x3, b2x3), axis=0) 
+# array([[  0.,  10.,   5.],
+#        [500.,   3.,   2.],
+#        [  1.,   1.,   1.],
+#        [  1.,   1.,   1.]])
+np.concatenate((a2x3, b2x3), axis=1)
+# array([[  0.,  10.,   5.,   1.,   1.,   1.],
+#        [500.,   3.,   2.,   1.,   1.,   1.]])
+np.concatenate((a2x3, c3x3), axis=0)
+# array([[  0,  10,   5],
+#        [500,   3,   2],
+#        [  1,   2,   3],
+#        [  4,   5,   6],
+#        [  7,   8,   9]])
+np.concatenate((a2x3, c3x3), axis=1) # ERROR: dimensions mismatch for concatenation
+
+# Concatenate 2D to 1D arrays
+# Reshape the 1D array into a 2D array to concatenate
+a1d = np.array([1,2])
+a2x3 = np.array([[0,10,5],[500,3,2]])
+a1d.shape # (2,)
+reshaped = a1d.reshape((2,1))
+np.concatenate((reshaped, a2x3), axis=1)
+# array([[  1,   0,  10,   5],
+#        [  2, 500,   3,   2]])
+
+# SPLIT
+arr_to_split = np.arange(6*4).reshape((6,4))
+# array([[ 0,  1,  2,  3],
+#        [ 4,  5,  6,  7],
+#        [ 8,  9, 10, 11],
+#        [12, 13, 14, 15],
+#        [16, 17, 18, 19],
+#        [20, 21, 22, 23]])
+
+# Remember you can also use array access to approximate split use cases 
+top1 = arr_to_split[:3, :]
+bottom1 = arr_to_split[3:, :]
+
+# np.split() 
+# Split via axis=0 (rows) in equal parts 
+top2, bottom2 = np.split(arr_to_split, 2, axis=0) # Does not mutate original array
+top2
+# array([[ 0,  1,  2,  3],
+#        [ 4,  5,  6,  7],
+#        [ 8,  9, 10, 11]])
+bottom2
+# array([[12, 13, 14, 15],
+#        [16, 17, 18, 19],
+#        [20, 21, 22, 23]])
+
+# Split via axis=1 (columns) in equal parts
+left, right = np.split(arr_to_split, 2, axis=1)
+
+# Split via axis=0 (rows) at specific splitting points
+top3, mid3, bottom3 = np.split(arr_to_split, [2,5], axis=0) # Splits [:2], [2:5], [5:]. Returns empty array if splitting points are beyond axis dimension
+top3
+# array([[0, 1, 2, 3],
+#        [4, 5, 6, 7]])
+mid3
+# array([[ 8,  9, 10, 11],
+#        [12, 13, 14, 15],
+#        [16, 17, 18, 19]])
+bottom3
+# array([[20, 21, 22, 23]]) 
+bottom3.shape # (1,4) Notice that it does not convert it into a 1D array
+
+# Split via axis=1 (columns) at specific splitting points
+left3, mid3, right3 = np.split(arr_to_split, [2,3], axis=1)
+```
+
+## Sorting by columns
