@@ -1,6 +1,5 @@
 # Numpy basics
 
-
 Numpy is a library for linear algebra and a bit of probability. The central object of numpy is the numpy array.
 
 #### Key conventions
@@ -34,6 +33,34 @@ and therefore can also represent 2D matrixes.  As of Apr 2022 `numpy.matrix` is 
 list.append(4) # [1, 2, 3, 4] mutates the original list
 list + [5] #[1, 2, 3, 4, 5] returns a new list
 array1d.append(4) # DOES NOT WORK. Numpy arrays have fixed size!
+```
+
+## Array access
+- Rows first, columns second
+
+```python
+array2d = np.array([[1,2], [3,4]])
+
+# Both options below are equivalent
+array2d[1, 1] # 4
+array2d[1][1] # 4
+
+# Accessing a row
+row = array2d[1] # array([3, 4])
+row.shape # (2,) NOTE THAT THIS RETURNS 1D VECTORS, as opposed to a (2,1) 2d matrix
+
+# Accessing a column
+column = array2d[:, 1] #  array([2, 4]
+column.shape # (2,) NOTE THAT THIS RETURNS 1D VECTORS, as opposed to a (2,1) 2d matrix
+
+# Accessing portions of an NP array
+bigArray2d = np.array([[1,2,3], [4,5,6], [7, 8, 9]])
+# array([[1, 2, 3],
+#        [4, 5, 6],
+#        [7, 8, 9]])
+bigArray2d[1:, 0:2] # `1:` means from row one till the end, `0:2` means from column 0 (inclusive) till column 2 (exclusive)
+# array([[4, 5],
+#        [7, 8]])
 ```
 
 ## Scalar operations
@@ -73,7 +100,7 @@ np.log(array2d) # Out[36]: array([[0., 0.69314718], [1.09861229, 1.38629436]])
 np.exp(array1d) # array([ 2.71828183,  7.3890561 , 20.08553692])
 np.tanh(array1d) # array([0.76159416, 0.96402758, 0.99505475])
 
-# And many other standard mathematical functions
+# ...and many other standard mathematical functions
 ```
 
 ### Element-wise application of arbitrary functions and lambdas
@@ -102,7 +129,7 @@ vectorized_stringify = np.vectorize(stringify)
 vectorized_stringify(array2d) # array([['1', '2'], ['3', '4']], dtype='<U1')
 ```
 
-## Vector to Vector and Matrix to Matrix operations
+## Vector to Vector and Matrix to Matrix element-wise operations
 Numpy verifies that the shape of the vectors of matrixes involved make sense and throws an error if not
 ```python
 vector1 = np.array([1,2,3])
@@ -148,29 +175,86 @@ cos = vec1.dot(vec2) / (norm1 * norm2) # 0.994444797133282
 ```
 
 
-## 
+## Matrix operations
+
+```python
+# TRANSPOSE
+import numpy as np
+
+array2d = np.array([[1, 2, 3], [4, 5, 6]])
+array2d.shape  # (2, 3)
+transposed = array2d.T
+# array([[1, 4],
+#       [2, 5],
+#       [3, 6]])
+transposed.shape  # 3, 2)
+
+# MATRIX MULTIPLICATION
+mat1 = np.array([[1, 2, 3], [4, 5, 6]])  # (2,3)
+mat2 = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])  # (3,4)
+mat3 = np.array([[1, 2], [3, 4]])  # (2,2)
+
+mat1.dot(mat2)
+mat1 @ mat2  # Equivalent to above
+# array([[ 38,  44,  50,  56],
+#        [ 83,  98, 113, 128]])
+# Result of shape (2, 4)
+
+mat1.dot(mat3)  # Will throw ERROR. Dimensions do not match
+
+# DETERMINANT
+np.linalg.det(mat1)  # ERROR: only square matrixes have determinants
+np.linalg.det(mat3)  # -2.0000000000000004
+
+# INVERSE
+np.linalg.inv(mat1)  # ERROR: non-square matrix
+np.linalg.inv(mat3)
+# array([[-2. ,  1. ],
+#       [ 1.5, -0.5]])
+mat3 @ np.linalg.inv(mat3)
+# array([[1.00000000e+00, 1.11022302e-16],
+#        [0.00000000e+00, 1.00000000e+00]])  Inversion of a matrix is a numerical operation
+
+# DIAGONAL OPERATIONS
+# There is a gotcha when you use the np.diag operation in matrix vs a vector
+# 1. np.diag in a matrix returns the diagonal elements of a matrix a s a vector
+np.diag(mat3)  # array([1, 4])
+# 2. np.diag on a vector creates a diagonal matrix using the numbers in the diagonal
+np.diag([6, 7])
+# array([[6, 0],
+#        [0, 7]])
+
+# EIGENVALUES AND EIGENVECTORS
+np.linalg.eig(mat3)
+#  We get a Python tuple
+# ( array([-0.37228132,  5.37228132]),   => The eigenvalues
+#   array([[-0.82456484, -0.41597356],   => The eigenvectors organised into a matrix AS COLUMN vectors
+#          [ 0.56576746, -0.90937671]]) )
+
+# COMPARISON OF TWO ARRAYS
+shouldBeIdentity = mat3 @ np.linalg.inv(mat3)
+# Element-wise comparison
+shouldBeIdentity == np.identity(2) # Equivalent of np.equal(arr1, arr2)
+# array([[False, False],
+#        [ True, False]])
+
+# Overall array to array comparison using `==` under the good (all elements must match exactly)
+np.array_equal(shouldBeIdentity, np.identity(2)) # False
+
+# Compare using a numerical tolerance 
+# You can adjust the tolerance with an argument
+# This is the best option after doing operations since there are a lot of operations that are numerical.
+np.allclose(shouldBeIdentity, np.identity(2)) # True
+```
+
 
 
 ## Common operations used in ML
 
-
-### Matrix Multiplication
-![matrix multiplication](mat-mul.png)
-
-```python
-a2d = np.array([[1,2], [3, 4]])
-b2d = np.array([[5,6], [7, 8]])
-a2d.dot(b2d)
-```
-
-### Element-wise Matrix Product
-![element-wise product](element-wise-product.png)
-
 ### Solve Linear Systems
 
-### Invert a Matrix
 
-### Find a daterminant |A|
+
 
 ### Choosing a random number
 Choosing at random from a distribution (e.g. Uniform, Gaussian)
