@@ -71,6 +71,12 @@ bigArray2d[:,[1,0]]
 # array([[2, 1],
 #        [5, 4],
 #        [8, 7]])
+
+# Cherry-piking multiple specific elements
+# This is key to understanding how `where` works
+bigArray2d[(1,0,2), (1,2,1)] # Looks for elements at (1,1), (0,2) and (2,1) IN THAT ORDER
+bigArray2d[([1,0,2], [1,2,1])] # Equivalent
+# array([5, 3, 8]) # Note that the order is preserved
 ```
 
 ## Iteration
@@ -600,5 +606,29 @@ sortedArr2Asc = arrToSort[arrToSort[:,columnToSortBy].argsort()]
 # Sort descending
 sortedArr2Desc = arrToSort[(-arrToSort[:,columnToSortBy]).argsort()]
 ```
-
 Sorting by rows can be achieved in a similar way.
+
+## Searching
+Searching for elements that comply with a certain condition using `where`
+```python
+import numpy as np
+arr = np.arange(3*4).reshape((3,4))
+# array([[ 0,  1,  2,  3],
+#        [ 4,  5,  6,  7],
+#        [ 8,  9, 10, 11]])
+
+
+# Search for elements that comply with a condition (2-step process: search indexes => retrieval)
+indexes_of_desired_elements = np.where(arr % 3 == 0) # Search for elements divisible by 3
+#  (array([0, 0, 1, 2]), array([0, 3, 2, 1]))  => this contains (row_indexes, column_indexes)
+desired_elements = arr[indexes_of_desired_elements]
+# array([0, 3, 6, 9])  See "cherry-piking of elements" above to understand why this works
+
+# If I am only interested in the indexes, of the elements, it is clearer to use np.argwhere
+# This result is easier to work with if I'm interested only in indexes but cannot be used directly for element retrieval
+np.argwhere(arr % 3 == 0)
+# array([[0, 0],  
+#        [0, 3],
+#        [1, 2],
+#        [2, 1]])
+```
