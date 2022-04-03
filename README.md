@@ -21,7 +21,25 @@ The work is based on a mixture of different resources. Notably:
 This is a work in progress and finishing all topics I want to cover will take a while. However, 
 this TOC points to the sections that I have finalized.
 
-### Part 1- Python (PENDING)
+### Part 1- Python
+- [Running Modes](./1-python.md#running-modes)
+- [Getting help](./1-python.md#getting-help)
+- [Strings](./1-python.md#strings)
+- [Data Structures](./1-python.md#data-structures)
+  * [Lists](./1-python.md#lists)
+  * [Tuples](./1-python.md#tuples)
+  * [Sets](./1-python.md#sets)
+  * [Dictionaries: Key-value map](./1-python.md#dictionaries-key-value-map)
+  * [Iteration](./1-python.md#iteration)
+  * [List Comprehensions](./1-python.md#list-comprehensions)
+  * [Sorting iterables](./1-python.md#sorting-iterables)
+- [If statements](./1-python.md#if-statements)
+- [Functions](./1-python.md#functions)
+- [Classes](./1-python.md#classes)
+  * [Using Classes](./1-python.md#using-classes)
+- [Unit Testing](./1-python.md#unit-testing)
+- [Debugging](./1-python.md#debugging)
+
 ### Part 2 - Numpy
 
 * [NP array creation](./2-numpy.md#np-array-creation)
