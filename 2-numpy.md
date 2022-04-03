@@ -73,6 +73,37 @@ bigArray2d[:,[1,0]]
 #        [8, 7]])
 ```
 
+## Iteration
+
+```python
+import numpy as np
+arr = np.array([[1,2,3], [4,5,6], [7, 8, 9]])
+
+# Simple iteration
+for row in arr:
+    for cell in row:
+        print(cell, end=' ')
+
+# Destructuring iteration
+for first, second, third in arr:
+    print(f'{first}-{second}-{third}')
+# 1-2-3
+# 4-5-6
+# 7-8-9
+    
+# List comprehension
+evens = [element for row in arr for element in row if element % 2 == 0 ]
+        
+# Iteration element by element with reference to the index in the multidimensional array 
+iterator = np.nditer(arr, flags=['multi_index'])
+for element in iterator:
+ print(f'{element} is at position {iterator.multi_index}')   
+# 1 is at position (0, 0)
+# 2 is at position (0, 1)
+# 3 is at position (0, 2)
+# ...
+```
+
 ## Scalar operations
 Numpy does element wise operations against scalars. This is called numpy broadcasting
 ```python

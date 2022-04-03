@@ -100,11 +100,15 @@ for idx, (fruit, price) in enumerate(fruitPrices.items()):
 * go to next iteration with `continue`
 
 
-## List Comprehensions
+### List Comprehensions
 List comprehensions are very powerful. The example below is effectively a `map` and a `filter` combined.
 ```python
 nums = [1,2,3,4,5,6]
 oddNumsPlusOne = [x+1 for x in nums if x % 2 ==1]
+
+# Nested list comprehension
+arr = [[1,2,3], [4,5,6], [7, 8, 9]]
+evens = [element for row in arr for element in row if element % 2 == 0 ]
 ```
 
 ## Sorting iterables
