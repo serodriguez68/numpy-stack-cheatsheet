@@ -590,7 +590,10 @@ sortedArr = arrToSort[sortingIndexes]  # this is cherry-picking certain rows by 
 #  [31 10 33  7]]◀───┘    0  ◀─────────────── [11 12 13 22]]     
                                                                
 # Now the evil-looking one-liner
-sortedArr2 = arrToSort[arrToSort[:,columnToSortBy].argsort()]
+# Sort ascending
+sortedArr2Asc = arrToSort[arrToSort[:,columnToSortBy].argsort()]
+# Sort descending
+sortedArr2Desc = arrToSort[(-arrToSort[:,columnToSortBy]).argsort()]
 ```
 
 Sorting by rows can be achieved in a similar way.
