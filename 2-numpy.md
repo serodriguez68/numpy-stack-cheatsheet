@@ -502,15 +502,20 @@ np.concatenate((a2x3, c3x3), axis=0)
 np.concatenate((a2x3, c3x3), axis=1) # ERROR: dimensions mismatch for concatenation
 
 # Concatenate 2D to 1D arrays
-# Reshape the 1D array into a 2D array to concatenate
+# Reshape the 1D array into a COLUMNAR 2D array to concatenate
 a1d = np.array([1,2])
 a2x3 = np.array([[0,10,5],[500,3,2]])
 a1d.shape # (2,)
-reshaped = a1d.reshape((2,1))
-np.concatenate((reshaped, a2x3), axis=1)
+col_reshaped = a1d.reshape((-1,1)) # -1 refers to the "last" dimension of the 1d array (which is its only one)
+# array([[1],
+#        [2]])
+np.concatenate((col_reshaped, a2x3), axis=1)
 # array([[  1,   0,  10,   5],
 #        [  2, 500,   3,   2]])
-
+# We can also reshape into ROW 2D array like so
+row_reshaped = a1d.reshape((1,-1))
+ # array([[1, 2]]) of shape  (1, 2)
+ 
 # SPLIT
 arr_to_split = np.arange(6*4).reshape((6,4))
 # array([[ 0,  1,  2,  3],
