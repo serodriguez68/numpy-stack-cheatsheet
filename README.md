@@ -64,3 +64,4 @@ this TOC points to the sections that I have finalized.
   + [Concatenate](./2-numpy.md#concatenate)
   + [Choosing a random number](./2-numpy.md#choosing-a-random-number)
 * [Sorting](./2-numpy.md#sorting)
+* [Searching](./2-numpy.md#searching)
