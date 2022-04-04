@@ -51,6 +51,7 @@ if __name__ == '__main__':
 ## Dictionaries: Key-value map 
 * `studentIds = {'knuth': 42.0, 'turing': 56.0, 'nash': 92.0 }`
 * Getter: ` studentIds['turing']`
+  * Getter with a default: `studentIds.get("foo", 0.0) # 0.0`
 * Setter: `studentIds['nash'] = 'ninety-two'
 * Delete a key: `del studentIds['knuth']`
 * Get all keys: `mydir.keys()`
@@ -59,7 +60,15 @@ if __name__ == '__main__':
     *  `=> [('knuth',[42.0, 'forty-two']), ('turing',56.0), ('nash','ninety-two')]`
 * Length of dir: `len(mydir)`
 * Key existence: ` mydir.has_key("hola")`
-* DefaultDict: Same as a dictionary but never raises a `KeyError`, it provides a default value itself.
+* Set a key if the key does not exist, else do nothing:  
+```python
+person = {"name": 'John'}
+person.setdefault("name", "Anon")
+person.setdefault("email", "not.found@example.com")
+print(person) # {"name": 'John', "email", "not.found@example.com"} 
+```
+* DefaultDict: Same as a dictionary but never raises a `KeyError`, it is configured to return a default value at
+  dictionary creation time.
 ```python
 from collections import defaultdict
 
