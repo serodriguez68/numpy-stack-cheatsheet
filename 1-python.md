@@ -45,6 +45,7 @@ if __name__ == '__main__':
 * Instantiation from list: `myset = set([1,2,3,3])`
 * `myset.add("something")`: adds to set (if element not in set)
 * `2 in myset => True` checks for existence
+* Number of elements in set `len(my_set) # 4`
 * Difference, Intersection Union: `myset2 - myset`, `myset2 & myset`, `myset2 | myset`
 
 ## Dictionaries: Key-value map 
