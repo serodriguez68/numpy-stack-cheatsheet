@@ -195,6 +195,7 @@ class FruitShop:
         #  Instance variables
         self.fruit_prices = fruit_prices
         self.name = name
+        self.__a_private_instance_variable = None
         
         # Accessing class variables within the instance
         # Can be accessed through the class directly or through an instance FruitShop.industry  VS myShop.industry
@@ -252,6 +253,13 @@ class FruitShop:
             if cost_per_pound != None:
                 total_cost += num_pounds * cost_per_pound
         return total_cost
+    
+    # == Visibility Modifiers ==
+    # Enforced by a naming convention that is applicable for both variables and methods
+    # `_`  means "protected". Only accessible to this class and subclasses
+    # `__` means "private". Only this class can access the variables or methods
+    def __sample_private_method(self):
+        pass
 ```
 
 ## Using Classes
