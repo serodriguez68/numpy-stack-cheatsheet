@@ -70,4 +70,48 @@ plt.legend(loc='upper right');
 
 <img alt="overlapping histograms" src="img/section-3-matplotlib/overlapping-histograms.png" />
 
-# Image plots
+# Plotting images
+
+```python
+# To open images into python we can use a library called Pillow
+from PIL import Image
+im = Image.open('img/section-3-matplotlib/dummy-image.jpeg')
+type(im) # PIL.JpegImagePlugin.JpegImageFile
+
+# PIL images can be converted to their np array representation
+image_as_array = np.array(im)
+image_as_array.shape  # (354, 536, 3) image h, image w, RGB channels
+
+# Use imshow to show images
+plt.imshow(image_as_array)
+plt.imshow(im) # Both produce the same result
+```
+
+<img alt="Plotted image" src="img/section-3-matplotlib/plotted-image.png" width="300"/>
+
+## Converting images to black and white
+```python
+# It is very common to work with black and white images in computer vision tasks.
+# A common way of converting a color image to B&W is to take the average of the RGB dimensions of the image
+bw_image_as_array = image_as_array.mean(axis=2)
+bw_image_as_array.shape # (354, 536) => This has lost the 3rd dimension
+
+# The first command may show the image in some weird shades of green. This is because it is up to matplot lib to 
+# assign which colour to show for an "image" that only has one channel.
+# The cmap argument is used to control the color map that matplotlib will use.
+plt.imshow(bw_image_as_array)
+plt.imshow(bw_image_as_array, cmap='gray')
+
+```
+<img alt="Plot of an image without color channels" src="img/section-3-matplotlib/plot-of-an-image-without-color-channels.png" width="500"/>
+
+
+# Heatmaps
+A heatmap is nothing more than an image visualization of 2D data.
+```python
+dummy_data = np.arange(0, 200 * 200, 1).reshape((200,200))
+plt.imshow(dummy_data, cmap="inferno")
+```
+<img alt="Plotted heatmap" src="img/section-3-matplotlib/heatmap.png" width="300"/>
+
+More complete instructions [in the docs](https://matplotlib.org/stable/gallery/images_contours_and_fields/image_annotated_heatmap.html).
