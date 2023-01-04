@@ -65,3 +65,15 @@ this TOC points to the sections that I have finalized.
   + [Choosing a random number](./2-numpy.md#choosing-a-random-number)
 * [Sorting](./2-numpy.md#sorting)
 * [Searching](./2-numpy.md#searching)
+
+### Part 3 - Matplotlib
+
+- [Line charts](./3-matplotlib.md#line-charts)
+- [Scatter plots](./3-matplotlib.md#scatter-plots)
+- [Histograms](./3-matplotlib.md#histograms)
+  * [Simple histogram](./3-matplotlib.md#simple-histogram)
+  * [Overlapping Histograms](./3-matplotlib.md#overlapping-histograms)
+- [Plotting images](./3-matplotlib.md#plotting-images)
+  * [Converting images to black and white](./3-matplotlib.md#converting-images-to-black-and-white)
+- [Heatmaps](./3-matplotlib.md#heatmaps)
+- [Combined Plots](./3-matplotlib.md#combined-plots)
