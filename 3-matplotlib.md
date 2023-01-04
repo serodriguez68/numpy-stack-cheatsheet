@@ -115,3 +115,22 @@ plt.imshow(dummy_data, cmap="inferno")
 <img alt="Plotted heatmap" src="img/section-3-matplotlib/heatmap.png" width="300"/>
 
 More complete instructions [in the docs](https://matplotlib.org/stable/gallery/images_contours_and_fields/image_annotated_heatmap.html).
+
+# Combined Plots
+It is very common to combine several types of plots to show data. 
+The combination `linear + scatter` plot is particularly common en machine learning to plot things like
+regression results or decision boundaries in classifiers.
+
+```python
+# Dummy data
+x = np.linspace(-10, 20, 100)
+y = 3*x + 2
+y2 = y + np.random.normal(0, 10, size=y.shape)
+y2_color = y2 > y
+
+# Just keep adding things to the same plot
+plt.plot(x,y)
+plt.plot(x, y-20)
+plt.scatter(x, y2, c=y2_color);
+```
+<img alt="Combined linear and scatter plot" src="img/section-3-matplotlib/combined-linear-and-scatter-plot.png" width="350"/>
