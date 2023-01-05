@@ -100,15 +100,21 @@ df.to_csv('output.csv', index=False) # Will not include the index column
 # Applying / Mapping a function to each row in a dataframe
 ```python
 # APPLY A FUNCTION TO EVERY ROW IN A DATA FRAME
+# If you are doing simple arithmetic or boolean operations between columns the operators are applied row by row
+df['open']**2
+df['open'] - df['close']
+
+# If you need to apply an arbitrary python function on each row
 # The function you want to map
 def date_to_year(row):
     return int(row['date'].split('-')[0])
-
 result = df.apply(date_to_year, axis=1) # axis=1 means apply through the rows
 # Returns a Pandas Series containing Series(2013, 2014, ...)
 
 # ADD A DERIVED COLUMN TO A DATAFRAME
 # It is very common to manipulate some column in a DF and add the result as a new column
+df['open**2'] = df['open']**2
+df['open-close'] = df['open'] - df['close']
 df['year'] = df.apply(date_to_year, axis=1)
 ```
 
