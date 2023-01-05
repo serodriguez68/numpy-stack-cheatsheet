@@ -134,3 +134,8 @@ plt.plot(x, y-20)
 plt.scatter(x, y2, c=y2_color);
 ```
 <img alt="Combined linear and scatter plot" src="img/section-3-matplotlib/combined-linear-and-scatter-plot.png" width="350"/>
+
+# Plotting with Pandas
+Go to [the pandas summary > plotting with Pandas](4-pandas.md#plotting-with-pandas)
+for information on how to build this same plots with Pandas and how to build some other plots
+like **boxplots** and **scatter_matrix**.
