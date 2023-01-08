@@ -77,3 +77,20 @@ this TOC points to the sections that I have finalized.
   * [Converting images to black and white](./3-matplotlib.md#converting-images-to-black-and-white)
 - [Heatmaps](./3-matplotlib.md#heatmaps)
 - [Combined Plots](./3-matplotlib.md#combined-plots)
+
+### Part 4 - Pandas
+
+- [Reading Data](./4-pandas.md#reading-data)
+- [Dataframe indexes](./4-pandas.md#dataframe-indexes)
+- [Understanding the structure of the data](./4-pandas.md#understanding-the-structure-of-the-data)
+  * [Replacing column names in a dataframe](./4-pandas.md#replacing-column-names-in-a-dataframe)
+- [Select Rows and Columns in a dataframe](./4-pandas.md#select-rows-and-columns-in-a-dataframe)
+- [Converting Dataframes into Numpy Arrays](./4-pandas.md#converting-dataframes-into-numpy-arrays)
+- [Writing to a file](./4-pandas.md#writing-to-a-file)
+- [Applying / Mapping a function to each row in a dataframe](./4-pandas.md#applying---mapping-a-function-to-each-row-in-a-dataframe)
+- [Get descriptive statistics of the columns](./4-pandas.md#get-descriptive-statistics-of-the-columns)
+- [Plotting with Pandas](./4-pandas.md#plotting-with-pandas)
+  * [Histogram](./4-pandas.md#histogram)
+  * [Line chart](./4-pandas.md#line-chart)
+  * [Box Plot](./4-pandas.md#box-plot)
+  * [Scatter matrix](./4-pandas.md#scatter-matrix)
