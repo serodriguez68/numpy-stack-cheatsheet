@@ -18,9 +18,6 @@ The work is based on a mixture of different resources. Notably:
 
 # Table of Content
 
-This is a work in progress and finishing all topics I want to cover will take a while. However, 
-this TOC points to the sections that I have finalized.
-
 ### Part 1- Python
 - [Running Modes](./1-python.md#running-modes)
 - [Getting help](./1-python.md#getting-help)
@@ -94,3 +91,8 @@ this TOC points to the sections that I have finalized.
   * [Line chart](./4-pandas.md#line-chart)
   * [Box Plot](./4-pandas.md#box-plot)
   * [Scatter matrix](./4-pandas.md#scatter-matrix)
+
+### Part 5 - SciPy
+
+- [Probability Density Functions (PDF) and Cumulative Density Functions (CDF)](#probability-density-functions--pdf--and-cumulative-density-functions--cdf-)
+- [Convolution](#convolution)
