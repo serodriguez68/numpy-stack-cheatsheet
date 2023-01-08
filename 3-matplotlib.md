@@ -135,6 +135,39 @@ plt.scatter(x, y2, c=y2_color);
 ```
 <img alt="Combined linear and scatter plot" src="img/section-3-matplotlib/combined-linear-and-scatter-plot.png" width="350"/>
 
+# Multiple subplots in a single figure
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-10, 10, 100)
+y1 = x
+y2 = x ** 2
+y3 = np.sin(x)
+y4 = np.abs(x)
+
+# The simplest way of doing it
+plt.subplot(2, 2, 1)  # rows, columns, active position
+plt.plot(x, y1)
+plt.subplot(2, 2, 2)
+plt.plot(x, y2)
+plt.subplot(2, 2, 3)
+plt.plot(x, y3)
+plt.subplot(2, 2, 4)
+plt.plot(x, y4)
+
+# Another way of doing it that gives you more control
+fig, ax = plt.subplots(2, 2, figsize=(10,7))
+fig.tight_layout()
+ax[0,0].plot(x, y1)
+ax[0,1].plot(x, y2)
+ax[1,0].plot(x, y3)
+ax[1,1].plot(x, y4)
+```
+<img alt="Sample of subplots" src="img/section-3-matplotlib/subplots.png" width="350"/>
+
+
 # Plotting with Pandas
 Go to [the pandas summary > plotting with Pandas](4-pandas.md#plotting-with-pandas)
 for information on how to build this same plots with Pandas and how to build some other plots
